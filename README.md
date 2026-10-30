@@ -51,8 +51,9 @@ Stability of the one timing-dependent reproduction, `go-http-body-close-deadlock
 **20/20** runs failed before the fix and **20/20** passed after it ([`results/go-http-body-close-deadlock/repeat.txt`](results/go-http-body-close-deadlock/repeat.txt),
 `make repeat BUG=go-http-body-close-deadlock N=20`).
 
-**Hardware.** Apple M4 Max (16 cores, 48 GiB), macOS 26.6.2; Docker 29.5.2 in
-a colima 0.10.3 VM with 4 vCPU and 6 GiB (5.8 GiB visible to Docker; aarch64 Linux 6.8), shared with
+**Hardware** (from [`results/environment.txt`](results/environment.txt), written by
+`scripts/environment.sh`). Apple M4 Max (16 cores, 48 GiB), macOS 26.6.2; Docker 29.5.2 in
+a colima 0.10.3 VM with 4 vCPU and 6 GiB (5.8 GiB visible to Docker; aarch64, kernel 6.8.0), shared with
 other workloads. CI runs the same `make verify` on GitHub's `ubuntu-latest`
 (x86_64); every base image is multi-arch and pinned by digest.
 

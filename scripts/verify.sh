@@ -19,11 +19,7 @@ now() { python3 -c 'import time; print(time.time())'; }
 secs() { python3 -c "print(f'{$2 - $1:.1f}')"; }
 
 mkdir -p results
-{
-  echo "date: $(date -u +%Y-%m-%dT%H:%MZ)"
-  echo "host: $(uname -sm)"
-  docker info --format 'docker: {{.ServerVersion}}, {{.OperatingSystem}}, {{.Architecture}}, {{.NCPU}} CPUs, {{.MemTotal}} bytes RAM'
-} > results/environment.txt
+scripts/environment.sh > results/environment.txt
 rows=()
 bad=0
 t0=$(now)
