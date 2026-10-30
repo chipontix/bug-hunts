@@ -1,0 +1,9 @@
++ go vet ./...
++ go test -v ./...
+=== RUN   TestConcurrentBodyReadAndEarlyClose
+    body_close_test.go:54: DEADLOCK: Body.Read did not return within 5s after the body ended
+--- FAIL: TestConcurrentBodyReadAndEarlyClose (5.11s)
+FAIL
+FAIL	bughunts/gohttp	5.124s
+FAIL
+exit=1

@@ -1,0 +1,22 @@
+Upstream fix, source hunk only (tests dropped).
+  project: {fmt}, https://github.com/fmtlib/fmt (MIT, see https://github.com/fmtlib/fmt/blob/master/LICENSE)
+  commit:  8a7aea04222d6680aae2c69fe8d514ffc2f9808d on master (PR #4934, merged 2026-09-07;
+           after 12.2.0, not in a release yet)
+  author:  IfkumRfnl
+
+diff --git a/include/fmt/std.h b/include/fmt/std.h
+index ed169de50c8e..1c43e007e20f 100644
+--- a/include/fmt/std.h
++++ b/include/fmt/std.h
+@@ -549,9 +549,10 @@ template <> struct formatter<std::error_code> {
+     if (it == end) return it;
+ 
+     it = detail::parse_align(it, end, specs_);
++    if (it == end) return it;
+ 
+     char c = *it;
+-    if (it != end && ((c >= '1' && c <= '9') || c == '{'))
++    if ((c >= '1' && c <= '9') || c == '{')
+       it = detail::parse_width(it, end, specs_, width_ref_, ctx);
+ 
+     if (it != end && *it == '?') {

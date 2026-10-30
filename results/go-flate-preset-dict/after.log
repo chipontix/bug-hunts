@@ -1,0 +1,83 @@
++ patch -d /usr/local/go -p1 < fix.patch
+patching file src/compress/flate/deflate.go
++ go vet ./...
++ go test -v ./...
+=== RUN   TestFlateRoundTripWithPresetDict
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=-2
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=-1
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=0
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=1
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=2
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=3
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=4
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=5
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=6
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=7
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=8
+=== RUN   TestFlateRoundTripWithPresetDict/size=100/level=9
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=-2
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=-1
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=0
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=1
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=2
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=3
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=4
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=5
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=6
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=7
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=8
+=== RUN   TestFlateRoundTripWithPresetDict/size=763/level=9
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=-2
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=-1
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=0
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=1
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=2
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=3
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=4
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=5
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=6
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=7
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=8
+=== RUN   TestFlateRoundTripWithPresetDict/size=4096/level=9
+--- PASS: TestFlateRoundTripWithPresetDict (0.07s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=-2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=-1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=0 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=3 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=4 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=5 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=6 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=7 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=8 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=100/level=9 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=-2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=-1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=0 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=3 (0.01s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=4 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=5 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=6 (0.02s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=7 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=8 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=763/level=9 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=-2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=-1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=0 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=1 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=2 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=3 (0.01s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=4 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=5 (0.01s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=6 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=7 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=8 (0.00s)
+    --- PASS: TestFlateRoundTripWithPresetDict/size=4096/level=9 (0.00s)
+=== RUN   TestZlibRoundTripWithPresetDict
+--- PASS: TestZlibRoundTripWithPresetDict (0.00s)
+PASS
+ok  	bughunts/goflate	0.074s
+exit=0

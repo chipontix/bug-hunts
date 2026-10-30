@@ -1,0 +1,10 @@
++ patch -d /usr/local/lib/python3.14 -p2 < fix.patch
+patching file asyncio/streams.py
++ python -X dev -m unittest -v test_sync_callback_leak
+test_transport_closed_and_error_reported (test_sync_callback_leak.SyncCallbackRaises.test_transport_closed_and_error_reported) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+exit=0

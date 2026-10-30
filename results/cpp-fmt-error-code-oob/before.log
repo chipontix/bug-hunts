@@ -1,0 +1,67 @@
++ g++ -std=c++20 -g -O0 -fno-omit-frame-pointer -fsanitize=address,undefined -DFMT_HEADER_ONLY -I/src/fmt/include error_code_test.cc -o /tmp/t
++ /tmp/t
+ok   {}: "generic:42"
+ok   {:>12}: "  generic:42"
+ok   {:*<12}: "generic:42**"
+=================================================================
+==13==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xfb046f3e0073 at pc 0x00000041b344 bp 0xffffd844cab0 sp 0xffffd844cac8
+READ of size 1 at 0xfb046f3e0073 thread T0
+    #0 0x00000041b340 in fmt::v12::formatter<std::error_code, char, void>::parse(fmt::v12::parse_context<char>&) /src/fmt/include/fmt/std.h:553
+    #1 0x000000457354 in void fmt::v12::detail::value<fmt::v12::context>::format_custom<std::error_code>(void*, fmt::v12::parse_context<char>&, fmt::v12::context&) /src/fmt/include/fmt/base.h:2281
+    #2 0x00000045460c in fmt::v12::basic_format_arg<fmt::v12::context>::format_custom(char const*, fmt::v12::parse_context<char>&, fmt::v12::context&) /src/fmt/include/fmt/base.h:2532
+    #3 0x00000043c8ac in fmt::v12::detail::format_handler<char>::on_format_specs(int, char const*, char const*) /src/fmt/include/fmt/format.h:4017
+    #4 0x00000042ef08 in char const* fmt::v12::detail::parse_replacement_field<char, fmt::v12::detail::format_handler<char>&>(char const*, char const*, fmt::v12::detail::format_handler<char>&) /src/fmt/include/fmt/base.h:1635
+    #5 0x00000042373c in void fmt::v12::detail::parse_format_string<char, fmt::v12::detail::format_handler<char> >(fmt::v12::basic_string_view<char>, fmt::v12::detail::format_handler<char>&&) /src/fmt/include/fmt/base.h:1650
+    #6 0x00000041a22c in fmt::v12::detail::vformat_to(fmt::v12::detail::buffer<char>&, fmt::v12::basic_string_view<char>, fmt::v12::basic_format_args<fmt::v12::context>, fmt::v12::locale_ref) /src/fmt/include/fmt/format-inl.h:1473
+    #7 0x000000419fd8 in fmt::v12::vformat[abi:cxx11](fmt::v12::basic_string_view<char>, fmt::v12::basic_format_args<fmt::v12::context>) /src/fmt/include/fmt/format-inl.h:1462
+    #8 0x000000404494 in format_exact /bug/error_code_test.cc:25
+    #9 0x000000404748 in expect_error /bug/error_code_test.cc:34
+    #10 0x000000404d54 in main /bug/error_code_test.cc:67
+    #11 0xfee470022258  (/lib/aarch64-linux-gnu/libc.so.6+0x22258) (BuildId: 5f3926d9963ff284b8173bf3601bbb00c3abad16)
+    #12 0xfee470022338 in __libc_start_main (/lib/aarch64-linux-gnu/libc.so.6+0x22338) (BuildId: 5f3926d9963ff284b8173bf3601bbb00c3abad16)
+    #13 0x000000403fec in _start (/tmp/t+0x403fec)
+
+0xfb046f3e0073 is located 0 bytes after 3-byte region [0xfb046f3e0070,0xfb046f3e0073)
+allocated by thread T0 here:
+    #0 0xfee470c60d7c in operator new[](unsigned long) (/usr/local/lib64/libasan.so.8+0xd0d7c)
+    #1 0x0000004041ac in format_exact /bug/error_code_test.cc:20
+    #2 0x000000404748 in expect_error /bug/error_code_test.cc:34
+    #3 0x000000404d54 in main /bug/error_code_test.cc:67
+    #4 0xfee470022258  (/lib/aarch64-linux-gnu/libc.so.6+0x22258) (BuildId: 5f3926d9963ff284b8173bf3601bbb00c3abad16)
+    #5 0x57fee470022338  (<unknown module>)
+    #6 0x3d000000403fec  (<unknown module>)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /src/fmt/include/fmt/std.h:553 in fmt::v12::formatter<std::error_code, char, void>::parse(fmt::v12::parse_context<char>&)
+Shadow bytes around the buggy address:
+  0xfb046f3dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0xfb046f3dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0xfb046f3dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0xfb046f3dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0xfb046f3dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0xfb046f3e0000: fa fa fd fa fa fa fd fa fa fa fd fa fa fa[03]fa
+  0xfb046f3e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0xfb046f3e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0xfb046f3e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0xfb046f3e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0xfb046f3e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==13==ABORTING
+exit=1

@@ -1,0 +1,9 @@
++ patch -d /usr/local/go -p1 < fix.patch
+patching file src/net/http/transport.go
++ go vet ./...
++ go test -v ./...
+=== RUN   TestConcurrentBodyReadAndEarlyClose
+--- PASS: TestConcurrentBodyReadAndEarlyClose (0.11s)
+PASS
+ok  	bughunts/gohttp	0.129s
+exit=0

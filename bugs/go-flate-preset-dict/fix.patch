@@ -1,0 +1,20 @@
+Upstream fix, source hunk only (tests and metadata dropped).
+  project: Go, https://github.com/golang/go (BSD-3-Clause, see https://go.dev/LICENSE)
+  commit:  d16d95ce1d92efbe2102d3754d4d64c2c7e4d4c1 on release-branch.go1.27 (released in go1.27.2)
+           cherry-pick of 655a713cda939618d56b179ed44d1257858b775c (master)
+  review:  https://go-review.googlesource.com/c/go/+/829764
+  issues:  https://github.com/golang/go/issues/80538, https://github.com/golang/go/issues/81233
+  author:  Ruihao Chen
+
+diff --git a/src/compress/flate/deflate.go b/src/compress/flate/deflate.go
+index fcd9d8c8d57ecd..f7e58e8dfc2f5c 100644
+--- a/src/compress/flate/deflate.go
++++ b/src/compress/flate/deflate.go
+@@ -250,6 +250,7 @@ func (d *compressor) fillWindow(b []byte) {
+ 	// Update window information.
+ 	d.windowEnd += n
+ 	s.index = n
++	d.blockStart = d.windowEnd
+ }
+ 
+ // findMatch finds the longest match starting at pos in the hash chain starting

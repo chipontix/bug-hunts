@@ -1,0 +1,10 @@
++ patch -d /src/json -p1 < fix.patch
+patching file include/nlohmann/json.hpp
++ g++ -std=c++17 -g -O0 -fno-omit-frame-pointer -fsanitize=address,undefined -I/src/json/include self_alias_test.cc -o /tmp/t
++ /tmp/t
+ok   update(j["a"]): {"a":1,"b":2}
+ok   merge_patch(j["a"]): {"b":2}
+ok   merge_patch(j): {"b":1}
+ok   ordered_json update(j["a"]): {"a":{"x":1,"y":2,"z":3},"x":1,"y":2,"z":3}
+0 failure(s)
+exit=0

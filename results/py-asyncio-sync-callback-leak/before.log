@@ -1,0 +1,57 @@
++ python -X dev -m unittest -v test_sync_callback_leak
+test_transport_closed_and_error_reported (test_sync_callback_leak.SyncCallbackRaises.test_transport_closed_and_error_reported) ... FAIL
+
+======================================================================
+FAIL: test_transport_closed_and_error_reported (test_sync_callback_leak.SyncCallbackRaises.test_transport_closed_and_error_reported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/bug/test_sync_callback_leak.py", line 29, in test_transport_closed_and_error_reported
+    data = await reader.read()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.14/asyncio/streams.py", line 730, in read
+    block = await self.read(self._limit)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.14/asyncio/streams.py", line 737, in read
+    await self._wait_for_data('read')
+  File "/usr/local/lib/python3.14/asyncio/streams.py", line 546, in _wait_for_data
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/bug/test_sync_callback_leak.py", line 28, in test_transport_closed_and_error_reported
+    async with asyncio.timeout(3):
+               ~~~~~~~~~~~~~~~^^^
+  File "/usr/local/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/local/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/bug/test_sync_callback_leak.py", line 31, in test_transport_closed_and_error_reported
+    self.fail("transport leaked: the server never closed the connection")
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: transport leaked: the server never closed the connection
+
+----------------------------------------------------------------------
+Ran 1 test in 3.073s
+
+FAILED (failures=1)
+<sys>:0: ResourceWarning: unclosed <socket.socket fd=6, family=2, type=1, proto=6, laddr=('127.0.0.1', 39135)>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<sys>:0: ResourceWarning: unclosed <socket.socket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 39135), raddr=('127.0.0.1', 55670)>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/lib/python3.14/asyncio/selector_events.py:875: ResourceWarning: unclosed transport <_SelectorSocketTransport fd=8>
+  _warn(f"unclosed transport {self!r}", ResourceWarning, source=self)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/lib/python3.14/asyncio/streams.py:410: ResourceWarning: loop is closed
+  warnings.warn("loop is closed", ResourceWarning)
+exit=1

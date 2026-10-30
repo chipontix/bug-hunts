@@ -1,0 +1,29 @@
+Upstream fix, source hunk only (tests and NEWS entry dropped).
+  project: CPython, https://github.com/python/cpython (PSF License 2.0, see https://docs.python.org/3/license.html)
+  commit:  fdc25ea1b1f2f48135a6017927057e346b080c97 on the 3.14 branch (PR #156273, released in 3.14.8)
+           backport of PR #155942 (main)
+  issue:   https://github.com/python/cpython/issues/155941
+
+diff --git a/Lib/asyncio/streams.py b/Lib/asyncio/streams.py
+index 0ea2881fa18acf4..ddaa7e5f795b1fe 100644
+--- a/Lib/asyncio/streams.py
++++ b/Lib/asyncio/streams.py
+@@ -240,7 +240,17 @@ def connection_made(self, transport):
+         self._over_ssl = transport.get_extra_info('sslcontext') is not None
+         if self._client_connected_cb is not None:
+             writer = StreamWriter(transport, self, reader, self._loop)
+-            res = self._client_connected_cb(reader, writer)
++            try:
++                res = self._client_connected_cb(reader, writer)
++            except Exception as exc:
++                self._loop.call_exception_handler({
++                    'message': 'Unhandled exception in client_connected_cb',
++                    'exception': exc,
++                    'transport': transport,
++                })
++                transport.close()
++                self._strong_reader = None
++                return
+             if coroutines.iscoroutine(res):
+                 def callback(task):
+                     if task.cancelled():

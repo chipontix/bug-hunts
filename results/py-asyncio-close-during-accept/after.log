@@ -1,0 +1,11 @@
++ patch -d /usr/local/lib/python3.14 -p2 < fix.patch
+patching file asyncio/proactor_events.py
+patching file asyncio/selector_events.py
++ python -X dev -m unittest -v test_close_during_accept
+test_close_between_accept_and_transport (test_close_during_accept.CloseDuringAccept.test_close_between_accept_and_transport) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+OK
+exit=0

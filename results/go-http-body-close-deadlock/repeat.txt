@@ -1,0 +1,5 @@
+# scripts/repeat.sh go-http-body-close-deadlock 20   (2026-10-30T22:12Z)
+before: exit codes: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+before: 20/20 failed, 0/20 passed
+after: exit codes: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+after: 0/20 failed, 20/20 passed

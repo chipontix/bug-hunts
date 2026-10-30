@@ -1,0 +1,38 @@
+Upstream fix, source hunks only (tests and NEWS entry dropped).
+  project: CPython, https://github.com/python/cpython (PSF License 2.0, see https://docs.python.org/3/license.html)
+  commit:  ed5531cd7a9918a08b4a4df2200e733fa3625905 on the 3.14 branch (PR #160879, merged 2026-10-29;
+           not in a release yet: the newest 3.14 release, 3.14.10, still has the bug)
+           backport of 5364bdce6b6f2b0e055057aef1002ef07b91a497 (main, PR #160851)
+  issue:   https://github.com/python/cpython/issues/109564
+
+diff --git a/Lib/asyncio/proactor_events.py b/Lib/asyncio/proactor_events.py
+index 0366bd7ba65fb0e..2e4b9f06566c24b 100644
+--- a/Lib/asyncio/proactor_events.py
++++ b/Lib/asyncio/proactor_events.py
+@@ -874,6 +874,11 @@ def loop(f=None):
+                         logger.debug("%r got a new connection from %r: %r",
+                                      server, addr, conn)
+                     protocol = protocol_factory()
++                    if server is not None and not server.is_serving():
++                        # The server was closed after the connection was
++                        # accepted.
++                        conn.close()
++                        return
+                     if sslcontext is not None:
+                         self._make_ssl_transport(
+                             conn, protocol, sslcontext, server_side=True,
+diff --git a/Lib/asyncio/selector_events.py b/Lib/asyncio/selector_events.py
+index 9ecb9d0634f3060..e2bf9a5e4ade198 100644
+--- a/Lib/asyncio/selector_events.py
++++ b/Lib/asyncio/selector_events.py
+@@ -223,6 +223,10 @@ async def _accept_connection2(
+         transport = None
+         try:
+             protocol = protocol_factory()
++            if server is not None and not server.is_serving():
++                # The server was closed after the connection was accepted.
++                conn.close()
++                return
+             waiter = self.create_future()
+             if sslcontext:
+                 transport = self._make_ssl_transport(

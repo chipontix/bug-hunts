@@ -1,0 +1,11 @@
++ patch -d /src/fmt -p1 < fix.patch
+patching file include/fmt/std.h
++ g++ -std=c++20 -g -O0 -fno-omit-frame-pointer -fsanitize=address,undefined -DFMT_HEADER_ONLY -I/src/fmt/include error_code_test.cc -o /tmp/t
++ /tmp/t
+ok   {}: "generic:42"
+ok   {:>12}: "  generic:42"
+ok   {:*<12}: "generic:42**"
+ok   {:>: format_error
+ok   {:*^: format_error
+0 failure(s)
+exit=0
